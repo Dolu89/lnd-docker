@@ -7,6 +7,7 @@ See [comodal/lnd-docker](https://hub.docker.com/r/comodal/lnd-docker/tags/) on D
 ```sh
 > docker run -d\
  --name lnd-bitcoin-testnet\
+ -p 9735:9735\
  -v lnd-bitcoin-testnet-data:/home/lnd/.lnd/data/\
  -v lnd-bitcoin-testnet-logs:/home/lnd/.lnd/logs/\
  comodal/lnd-docker:stretch-latest\
