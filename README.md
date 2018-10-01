@@ -8,6 +8,9 @@ See [comodal/lnd-docker](https://hub.docker.com/r/comodal/lnd-docker/tags/) on D
 > docker run -d\
  --name lnd-bitcoin-testnet\
  -p 9735:9735\
+ -p 10009:10009\
+ -p 8080:8080\
+ -p 8333:8333\
  -v lnd-bitcoin-testnet-data:/home/lnd/.lnd/data/\
  -v lnd-bitcoin-testnet-logs:/home/lnd/.lnd/logs/\
  comodal/lnd-docker:stretch-latest\
@@ -41,19 +44,20 @@ You can create an alias
 ```sh
 $ alias lncli="lncli --macaroonpath=/home/lnd/.lnd/data/chain/bitcoin/testnet/admin.macaroon --lnddir=/home/lnd/.lnd --tlscertpath=/home/lnd/.lnd/data/tls.cert --chain=bitcoin --network=testnet"
 ```
-Now you can use lncli without parameters
+Now you can use `lncli` without parameters
+
+### Use this node from elsewhere
+Create .lnd.conf, write some informations (you server external IP) and regenerate your certs by deleting
+```sh
+$ cd /home/lnd/.lnd
+$ touch lnd.conf
+$ echo -e "[Application Options]\nexternalip=YOURSERVERIP\nrpclisten=0.0.0.0:10009\ntlsextraip=YOURSERVERIP" > lnd.conf
+$ rm data/tls.*
+```
 
 ### Create wallet on testnet
 ```sh
 $ lncli create
-```
-
-## Get a new address, when synchronised (lncli getinfo show **"synced_to_chain": false**):
-```sh
-$ lncli newaddress np2wkh
-{
-    "address": "2N1cVnQE53bwuV9nCa84FbML66vwaDhCagf"
-}
 ```
 
 ## Visit the faucet to get free tentnet BTC:
